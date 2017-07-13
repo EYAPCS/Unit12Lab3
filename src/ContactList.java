@@ -149,8 +149,11 @@ public class ContactList {
                     break;
 
                 case 2:
-                    System.out.print("Enter the name of the person you would like to delete: ");
-                    String name = input.next()
+                    System.out.print("Enter the FIRST name of the person you would like to delete: ");
+                    String first = input.next();
+                    System.out.print("Enter the LAST name of the person you would like to delete: ");
+                    String last = input.next();
+                    String name = first + " " + last;
                     boolean found = false;
 
                         for(Map.Entry<String, Contact> entry : contactList.entrySet()) {
