@@ -15,6 +15,10 @@ public class Contact {
         setEmailAddress(emailAddress);
     }
 
+    public Contact() {
+
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -46,4 +50,25 @@ public class Contact {
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
+
+    public void printDetails() {
+
+        System.out.println(getFirstName() + " " + getLastName() + ": ");
+        System.out.println("Phone Number: " + getPhoneNumber());
+        System.out.println("Email Address: " + getEmailAddress());
+
+    }
+
+    public String detailsToString() {
+
+        return getFirstName() + "\t" + getLastName() + "\t" + getPhoneNumber() + "\t" + getEmailAddress();
+
+    }
+
+    public String reverseName() {
+
+        return getLastName() + " " + getFirstName();
+
+    }
+
 }
