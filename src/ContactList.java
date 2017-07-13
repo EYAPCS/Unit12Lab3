@@ -13,7 +13,211 @@ public class ContactList {
         boolean running = true;
         Scanner input = new Scanner(System.in);
 
-        TreeMap<String, ArrayList<String>> contactList = new TreeMap<String, ArrayList<String>>();
+        TreeMap<String, Contact> contactList = new TreeMap<String, Contact>();
+
+//        Contact temp = new Contact("Danny", "Brown", "23456789", "adry@asdf.com");
+//
+//        Contact temp2 = new Contact("Abby", "Yang", "34576", "aby@asdf.com");
+//
+//        Contact temp3 = new Contact("Jon", "Snow", "23456789", "js@asdf.com");
+//
+//        Contact temp4 = new Contact("Daenerys", "Targaryen", "23456789", "js@asdf.com");
+//
+//        contactList.put(temp.reverseName(), temp);
+//        contactList.put(temp2.reverseName(), temp2);
+//        contactList.put(temp3.reverseName(), temp3);
+//        contactList.put(temp4.reverseName(), temp4);
+
+//        for(Map.Entry<String, Contact> entry : contactList.entrySet()) {
+//
+//            String key = entry.getKey();
+//            Contact value = entry.getValue();
+//
+//            value.printDetails();
+//
+//        }
+
+
+//        String fileName = "/Users/emma/Documents/contacts/";
+//
+//        try {
+//            // Assume default encoding.
+//            FileWriter fileWriter =
+//                    new FileWriter(fileName);
+//
+//            // Always wrap FileWriter in BufferedWriter.
+//            BufferedWriter bufferedWriter =
+//                    new BufferedWriter(fileWriter);
+//
+//            // Note that write() does not automatically
+//            // append a newline character.
+//            for(Map.Entry<String, Contact> entry : contactList.entrySet()) {
+//                Contact value = entry.getValue();
+//
+//                bufferedWriter.write(value.detailsToString());
+//                bufferedWriter.newLine();
+//
+//            }
+//
+//            // Always close files.
+//            bufferedWriter.close();
+//        }
+//        catch(IOException ex) {
+//            System.out.println(
+//                    "Error writing to file '"
+//                            + fileName + "'");
+//            // Or we could just do this:
+//            // ex.printStackTrace();
+//        }
+
+        System.out.println("Enter the file path of the contacts file: ");
+        filePath = input.next();
+
+        // This will reference one line at a time
+        String line = null;
+
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader =
+                    new FileReader(filePath);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader =
+                    new BufferedReader(fileReader);
+
+            while((line = bufferedReader.readLine()) != null) {
+//                System.out.println(line);
+
+                String[] words = line.split("\t");
+                String firstName = words[0];
+                String lastName = words[1];
+                String phoneNumber = words[2];
+                String emailAddress = words[3];
+
+                Contact newPerson = new Contact(firstName, lastName, phoneNumber, emailAddress);
+                contactList.put(newPerson.reverseName(), newPerson);
+
+            }
+
+            // Always close files.
+            bufferedReader.close();
+        }
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                    "Unable to open file '" +
+                            filePath + "'");
+        }
+        catch(IOException ex) {
+            System.out.println(
+                    "Error reading file '"
+                            + filePath + "'");
+            // Or we could just do this:
+            // ex.printStackTrace();
+        }
+
+
+        for(Map.Entry<String, Contact> entry : contactList.entrySet()) {
+            Contact value = entry.getValue();
+
+            value.printDetails();
+            System.out.println();
+
+        }
+
+        while(running) {
+
+            System.out.println("Enter: 1 to add a contact, 2 to delete a contact, 3 to display the entire list, 4 to save & quit");
+            int decision = input.nextInt();
+
+            switch(decision) {
+
+                case 1:
+                    System.out.print("First Name: ");
+                    String firstName = input.next();
+
+                    System.out.print("Last Name: ");
+                    String lastName = input.next();
+
+                    System.out.print("Phone Number: ");
+                    String phoneNumber = input.next();
+
+                    System.out.print("Email Address: ");
+                    String emailAddress = input.next();
+
+                    Contact newPerson = new Contact(firstName, lastName, phoneNumber, emailAddress);
+                    contactList.put(newPerson.reverseName(), newPerson);
+                    break;
+
+                case 2:
+                    System.out.print("Enter the name of the person you would like to delete: ");
+                    String name = input.next()
+                    boolean found = false;
+
+                        for(Map.Entry<String, Contact> entry : contactList.entrySet()) {
+                            Contact value = entry.getValue();
+
+                            if(value.fullName().equals(name)) {
+                                contactList.remove(value.reverseName());
+                                found = true;
+                            }
+
+                        }
+
+                        if(found == false) {
+                            System.out.println(name + " not found in contacts");
+                        }
+
+                    break;
+
+                case 3:
+                    for(Map.Entry<String, Contact> entry : contactList.entrySet()) {
+                        Contact value = entry.getValue();
+
+                        value.printDetails();
+
+                    }
+                    break;
+
+                case 4:
+                    try {
+                        // Assume default encoding.
+                        FileWriter fileWriter =
+                                new FileWriter(filePath);
+
+                        // Always wrap FileWriter in BufferedWriter.
+                        BufferedWriter bufferedWriter =
+                                new BufferedWriter(fileWriter);
+
+                        // Note that write() does not automatically
+                        // append a newline character.
+                        for(Map.Entry<String, Contact> entry : contactList.entrySet()) {
+                            Contact value = entry.getValue();
+
+                            bufferedWriter.write(value.detailsToString());
+                            bufferedWriter.newLine();
+
+                        }
+
+                        // Always close files.
+                        bufferedWriter.close();
+                    }
+                    catch(IOException ex) {
+                        System.out.println(
+                                "Error writing to file '"
+                                        + filePath + "'");
+                        // Or we could just do this:
+                        // ex.printStackTrace();
+                    }
+                    running = false;
+
+
+            }
+
+        }
+
+
+
+
 
 //        System.out.println("File Path:");
 //        filePath = input.next();
@@ -58,41 +262,41 @@ public class ContactList {
 //        }
 
 //        Contact class + TreeMap tests
-        Contact temp = new Contact("Adrian", "Adam", "23456789", "asdf@asdf.com");
-
-        String name = temp.getLastName() + ", " + temp.getFirstName();
-
-        ArrayList<String> info = new ArrayList<String>();
-        info.add(temp.getPhoneNumber());
-        info.add(temp.getEmailAddress());
-
-        contactList.put(name, info);
-
-        Contact temp2 = new Contact("Zoe", "Adam", "23456789", "asdf@asdf.com");
-
-        String name2 = temp2.getLastName() + ", " + temp2.getFirstName();
-
-        ArrayList<String> info2 = new ArrayList<String>();
-        info2.add(temp.getPhoneNumber());
-        info2.add(temp.getEmailAddress());
-
-        contactList.put(name2, info2);
-
-        Contact temp3 = new Contact("Adrian", "Adam", "23456789", "asdf@asdf.com");
-
-        String name3 = temp.getLastName() + ", " + temp.getFirstName();
-
-        ArrayList<String> info3 = new ArrayList<String>();
-        info3.add(temp.getPhoneNumber());
-        info3.add(temp.getEmailAddress());
-
-        contactList.put(name3, info3);
-
-        for (int i = 0; i < contactList.size(); i++) {
-
-            System.out.println(contactList.keySet().toArray()[i] + " : " + contactList.entrySet().toArray()[i]);
-
-        }
+//        Contact temp = new Contact("Adrian", "Adam", "23456789", "asdf@asdf.com");
+//
+//        String name = temp.getLastName() + ", " + temp.getFirstName();
+//
+//        ArrayList<String> info = new ArrayList<String>();
+//        info.add(temp.getPhoneNumber());
+//        info.add(temp.getEmailAddress());
+//
+//        contactList.put(name, info);
+//
+//        Contact temp2 = new Contact("Zoe", "Adam", "23456789", "asdf@asdf.com");
+//
+//        String name2 = temp2.getLastName() + ", " + temp2.getFirstName();
+//
+//        ArrayList<String> info2 = new ArrayList<String>();
+//        info2.add(temp.getPhoneNumber());
+//        info2.add(temp.getEmailAddress());
+//
+//        contactList.put(name2, info2);
+//
+//        Contact temp3 = new Contact("Adrian", "Adam", "23456789", "asdf@asdf.com");
+//
+//        String name3 = temp.getLastName() + ", " + temp.getFirstName();
+//
+//        ArrayList<String> info3 = new ArrayList<String>();
+//        info3.add(temp.getPhoneNumber());
+//        info3.add(temp.getEmailAddress());
+//
+//        contactList.put(name3, info3);
+//
+//        for (int i = 0; i < contactList.size(); i++) {
+//
+//            System.out.println(contactList.keySet().toArray()[i] + " : " + contactList.entrySet().toArray()[i]);
+//
+//        }
 
 //        filePath = "/Users/emma/Documents/contacts";
 //

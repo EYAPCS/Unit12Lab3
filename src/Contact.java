@@ -56,6 +56,7 @@ public class Contact {
         System.out.println(getFirstName() + " " + getLastName() + ": ");
         System.out.println("Phone Number: " + getPhoneNumber());
         System.out.println("Email Address: " + getEmailAddress());
+        System.out.println();
 
     }
 
@@ -69,6 +70,10 @@ public class Contact {
 
         return getLastName() + " " + getFirstName();
 
+    }
+
+    public String fullName() {
+        return getFirstName() + " " + getLastName();
     }
 
 }
