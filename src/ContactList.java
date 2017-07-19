@@ -2,6 +2,11 @@
  * Created by emma on 7/12/17.
  */
 
+/**
+ * Reads file from a given file path, then adds, deletes and displays contacts. When the user quits, the contact
+ * list is saved back to the file.
+ */
+
 import java.io.*;
 import java.util.*;
 
@@ -104,6 +109,7 @@ public class ContactList {
                         if(value.fullName().equals(name)) {
                             contactList.remove(value.reverseName());
                             found = true;
+                            break;
                         }
 
                     }

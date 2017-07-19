@@ -1,6 +1,12 @@
 /**
  * Created by emma on 7/12/17.
  */
+
+/**
+ * A contact has a first name, last name, phone number and email address. It also can print itself, give the reversed
+ * name for the contact list key, and give the format for the contact file.
+ */
+
 public class Contact {
 
     private String firstName;
