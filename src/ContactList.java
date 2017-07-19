@@ -5,6 +5,9 @@
 /**
  * Reads file from a given file path, then adds, deletes and displays contacts. When the user quits, the contact
  * list is saved back to the file.
+ * User Notes: When prompted for the file path and name, enter something like
+ * /Users/emma/Documents/contacts
+ * If the file doesn't exist, it will be created upon saving
  */
 
 import java.io.*;
@@ -20,7 +23,7 @@ public class ContactList {
 
         TreeMap<String, Contact> contactList = new TreeMap<String, Contact>();
 
-        System.out.println("Enter the file path of the contacts file: ");
+        System.out.println("Enter the file path & name of the contacts file: ");
         filePath = input.next();
 
         // This will reference one line at a time
@@ -55,6 +58,7 @@ public class ContactList {
             System.out.println(
                     "Unable to open file '" +
                             filePath + "'");
+            System.out.println("The file will be created upon saving");
         }
         catch(IOException ex) {
             System.out.println(
@@ -73,7 +77,7 @@ public class ContactList {
 
         while(running) {
 
-            System.out.println("Enter: 1 to add a contact, 2 to delete a contact, 3 to display the entire list, 4 to save & quit");
+            System.out.println("Enter: 1 to add a contact, 2 to delete a contact, 3 to display the entire list, 0 to save & quit");
             int decision = input.nextInt();
 
             switch(decision) {
@@ -129,7 +133,7 @@ public class ContactList {
                     }
                     break;
 
-                case 4:
+                case 0:
                     try {
                         FileWriter fileWriter =
                                 new FileWriter(filePath);
